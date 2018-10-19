@@ -13,6 +13,7 @@ export default class DataBus {
     this.isGameOver = false; //游戏是否结束
     this.score = 0; //分数
     this.aniId = 0; // 动画句柄
+
   }
 
 }
