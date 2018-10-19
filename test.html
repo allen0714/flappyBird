@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+</head>
+<body>
+<canvas id="canvas" width="600" height="600">
+    sss
+</canvas>
+<script>
+
+    const canvas = document.getElementById('canvas');
+
+    const context = canvas.getContext('2d');
+    const img =  new Image();
+    let left = 0;
+    img.src = './images/bg_day.png';
+    const update = () => {
+        left +=2;
+        if (this.left > 600) {
+            left = 0;
+        }
+    };
+
+    const render = () => {
+        context.drawImage(
+            img,
+            0,
+            0,
+            600,
+            600,
+            left - 600,
+            0,
+            600,
+            600
+        );
+
+        context.drawImage(
+            img,
+            0,
+            0,
+            600,
+            600,
+            left,
+            0,
+            600,
+            600
+        );
+    };
+
+    const loop = () => {
+        update();
+        render();
+        this.aniId = window.requestAnimationFrame(
+            loop
+        );
+    };
+    loop();
+</script>
+</body>
+</html>
