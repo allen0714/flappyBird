@@ -1,5 +1,5 @@
 import DataBus from './DataBus';
-import Backgound  from './runtime/Background.js';
+import Background  from './runtime/Background.js';
 
 let dataBus = null;
 let bg = null;
@@ -7,7 +7,7 @@ let ctx = canvas.getContext('2d');
 
 const start = () => {
   dataBus = new DataBus();
-  bg = new Backgound(ctx);
+  bg = new Background(ctx);
   loop();
 };
 
