@@ -3,17 +3,14 @@ import Background  from './runtime/Background.js';
 import Menu from './runtime/Menu.js';
 import Bird from './runtime/Bird.js';
 
-const screenWidth = window.innerWidth;
-const screenHeight = window.innerHeight;
 let dataBus = null;
 let bg = null;
 let ctx = canvas.getContext('2d');
-let isMenuDisplay = true;
 let menu = null;
 let flyBird = null;
 let touchHandler = null;
 let touchRankHandle = null;
-let isTouchBegin = false;
+let preTime = null;
 
 const start = () => {
   dataBus = new DataBus();
@@ -21,7 +18,7 @@ const start = () => {
   menu = new Menu();
   flyBird = new Bird(ctx);
   loop();
-  if (isMenuDisplay) {
+  if (dataBus.phase === 0) {
     touchHandler = touchBeginEventHandler.bind(this);
     canvas.addEventListener('touchstart', touchHandler);
     touchRankHandle = touchRankEventHandler.bind(this);
@@ -49,7 +46,7 @@ const stopAnimation = () => {
  */
 const loop = () => {
   dataBus.frame ++ ;
-  update(dataBus.frame);
+  update();
   render();
   startNextAnimation();
 };
@@ -57,9 +54,8 @@ const loop = () => {
 /**
  * 更新逻辑
  */
-const update = (frame) => {
+const update = () => {
   bg.update();
-  flyBird.update(frame);
 };
 
 /**
@@ -68,28 +64,39 @@ const update = (frame) => {
 const render = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   bg.render(ctx);
-  if (isMenuDisplay) {
+  if (dataBus.phase === 0) {
+    flyBird.update(dataBus.frame);
     flyBird.render();
     menu.renderGameMenu(ctx);
+  }
+  if (dataBus.phase === 2) {
+    const now = Date.now();
+    const dt = now - preTime;
+    preTime = now;
+    flyBird.update(dataBus.frame);
+    flyBird.birdDown(dt);
+    flyBird.drawFlyBird();
   }
 };
 
 const touchBeginEventHandler = (e) => {
-  e.preventDefault()
-
-  let x = e.touches[0].clientX
-  let y = e.touches[0].clientY
-  let area = menu.btnBeginArea
+  e.preventDefault();
+  let x = e.touches[0].clientX;
+  let y = e.touches[0].clientY;
+  let area = menu.btnBeginArea;
   if (x >= area.startX
     && x <= area.endX
     && y >= area.startY
     && y <= area.endY) {
-      // 点击开始游戏后触发的事件
-      console.log(1);
-      isMenuDisplay = false;
-      isTouchBegin = true;
+      dataBus.goToPlay();
       //清除点击事件
       canvas.removeEventListener('touchstart', touchHandler);
+      preTime = Date.now();
+      if (dataBus.phase === 2) {
+        canvas.addEventListener('touchstart', () => {
+          flyBird.speed = -0.3;
+        });
+      }
     }
 }
 const touchRankEventHandler = (e) => {
@@ -103,8 +110,7 @@ const touchRankEventHandler = (e) => {
     && y >= area.startY
     && y <= area.endY) {
     // 点击排行榜后触发的事件
-    console.log(2);
-    isMenuDisplay = false;
+    dataBus.goToRank();
     //清除点击事件
     canvas.removeEventListener('touchstart', touchRankHandle);
   }
