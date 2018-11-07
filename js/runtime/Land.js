@@ -3,7 +3,7 @@ import Sprite from '../base/Sprite';
 let instance = null;
 const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
 const BG_IMG_SRC = 'images/land.png';//绝对路径
-const [BG_WIDTH, BG_HEIGHT, BG_PIC_HEIGHT, BG_MOVE_STEP] = [336, 112, screenHeight-112, 70];
+const [BG_WIDTH, BG_HEIGHT, BG_PIC_HEIGHT, BG_MOVE_STEP] = [336, 112, screenHeight-112, 50];
 
 export default class Land extends Sprite {
   constructor(ctx) {
