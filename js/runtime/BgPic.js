@@ -1,11 +1,13 @@
 import Sprite from '../base/Sprite';
 
+
 let instance = null;
 const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
+const ctx = canvas.getContext('2d');
 const BG_IMG_SRC = 'images/bg_day.png';//绝对路径
 const [BG_DAY_SRC, BG_NIGHT_SRC] = ['images/bg_day.png', 'images/bg_night.png'];
 const [
-  BG_WIDTH, 
+  BG_WIDTH,
   BG_HEIGHT,
   LAND_HEIGHT,//地面的高度
   DAY_DURATION,//日（夜）长：对应播放多少张白天图片，变成黑夜；反过来也用这个
@@ -13,8 +15,7 @@ const [
   ] = [288, 512,112, 2, 0.5];
 
 export default class BgPic extends Sprite {
-  constructor(ctx) {
-    console.info('屏宽：', screenWidth, '屏高:', screenHeight);
+  constructor() {
     if (instance) {
       return instance;
     }
@@ -23,11 +24,9 @@ export default class BgPic extends Sprite {
     this.left = screenWidth;
     this.dayNightPicCount = 0;//白天（黑夜）出现的图片数计数器
     this.isDay = true; //当前是白天
-    this.ctx = ctx;
-    this.render(ctx);
   }
 
-  update() {
+  render() {
     this.left -= BG_MOVE_STEP;
     if (this.left < 0) {
       this.left = screenWidth;
@@ -38,13 +37,10 @@ export default class BgPic extends Sprite {
         this.setImage(this.isDay ? BG_DAY_SRC : BG_NIGHT_SRC, BG_WIDTH, BG_HEIGHT);
       }
     }
-  }
-
-  render() {
   /**
    * 通过绘制两张图片模拟动画效果
    */
-    this.ctx.drawImage(
+    ctx.drawImage(
       this.img,
       0,
       0,
@@ -56,7 +52,7 @@ export default class BgPic extends Sprite {
       screenHeight - LAND_HEIGHT
     );
 
-    this.ctx.drawImage(
+    ctx.drawImage(
       this.img,
       0,
       0,

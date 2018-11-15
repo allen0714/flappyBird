@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas</title>
+</head>
+<body>
+
+<canvas id="canvas">
+  不支持~
+</canvas>
+
+<script>
+  var canvas = document.getElementById('canvas');
+  var context = canvas.getContext('2d');
+  var image = new Image();
+  image.src ='./images/bg_night.png';
+  context.drawImage(image, 0 , 0, 200,200, 0,0,200,200);
+  var context2 = canvas.getContext('2d');
+  context2.drawImage(image, 200, 400, 50,50, 80,80,50,50);
+  </script>
+</body>
+</html>

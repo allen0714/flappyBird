@@ -1,0 +1,23 @@
+{
+  "name": "flappyBird",
+  "version": "1.0.0",
+  "description": "## 目录结构",
+  "main": "game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allen0714/flappyBird.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allen0714/flappyBird/issues"
+  },
+  "homepage": "https://github.com/allen0714/flappyBird#readme",
+  "dependencies": {
+    "lodash": "^4.17.11"
+  }
+}

@@ -1,34 +1,32 @@
 import Sprite from '../base/Sprite';
 
-let instance = null;
 const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
 const BG_IMG_SRC = 'images/land.png';//绝对路径
 const [BG_WIDTH, BG_HEIGHT, BG_PIC_HEIGHT, BG_MOVE_STEP] = [336, 112, screenHeight-112, 50];
+const ctx = canvas.getContext('2d');
+
+let instance = null;
 
 export default class Land extends Sprite {
-  constructor(ctx) {
+  constructor() {
     if (instance) {
       return instance;
     }
     super(BG_IMG_SRC, BG_WIDTH, BG_HEIGHT);
     instance = this;
     this.left = screenWidth;
-    this.ctx = ctx;
-    this.render(ctx);
+    this.render();
   }
 
-  update() {
+  render() {
     this.left -= BG_MOVE_STEP;
     if (this.left < 0) {
       this.left = screenWidth;
     }
-  }
-
-  render() {
     /**
     * 通过绘制两张图片模拟动画效果
     */
-    this.ctx.drawImage(
+    ctx.drawImage(
       this.img,
       0,
       0,
@@ -41,7 +39,7 @@ export default class Land extends Sprite {
       BG_HEIGHT
     );
 
-    this.ctx.drawImage(
+    ctx.drawImage(
       this.img,
       0,
       0,

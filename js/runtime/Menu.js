@@ -1,5 +1,9 @@
+import EventUtil from '../base/EventUtil.js';
 const screenWidth = window.innerWidth;
 const screenHeight = window.innerHeight;
+const ctx = canvas.getContext('2d');
+const ctx2 = canvas.getContext('2d');
+console.log('is it equal?:  ', ctx ===ctx2);
 
 let atlas = new Image();
 atlas.src = 'images/title.png';
@@ -17,7 +21,7 @@ const roundRect = (ctx,x, y, w, h, r) => {
   return ctx;
 }
 export default class Menu {
-  renderGameMenu(ctx) {
+  renderGameMenu() {
     // 绘制title
     ctx.drawImage(
       atlas,
@@ -63,6 +67,20 @@ export default class Menu {
       screenHeight / 2 - 120 + 300
     )
   }
+  checkIfHit = (e, targetType) => {
+    const { clientX, clientY } = e.touches[0];
+    const { startX, startY, endX, endY } = (targetType === 'RANK' ? this.btnRankArea: this.btnBeginArea);
+    return (clientX >= startX
+      && clientX <= endX
+      && clientY >= startY
+      && clientY <= endY);
+  }
+
+
+  getTouchRankFunc = EventUtil.addTouchHandler(e => this.checkIfHit(e, 'RANK'))
+
+  getTouchStartFunc = EventUtil.addTouchHandler(e => this.checkIfHit(e, 'START'))
+
   btnBeginArea = {
     startX: screenWidth / 2 - 87,
     startY: screenHeight / 2 - 35,
@@ -75,4 +93,6 @@ export default class Menu {
     endX: screenWidth / 2 + 80,
     endY: screenHeight / 2 + 180,
   }
+
+
 }
