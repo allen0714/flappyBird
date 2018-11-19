@@ -1,4 +1,3 @@
-//import Bird from '../runtime/Bird.js';
 import Bird from '../runtime/Bird';
 import DataBus from '../DataBus';
 import BackGround from '../runtime/Background';

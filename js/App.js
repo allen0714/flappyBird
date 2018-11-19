@@ -8,6 +8,21 @@ import Play from './routes/Play';
 
 const ctx = canvas.getContext('2d');
 
+const getRoute = (phase) => {
+  switch(phase) {
+    case 'MENU': 
+      return new Menu();
+    case 'INTRO':
+      return new Intro();
+    case 'RANK':
+      return new Rank();
+    case 'PLAY':
+      return new Play();
+    default:
+      throw new Error('unknown router of phase:' + phase);
+  }
+} 
+
 
 export default class App {
   constructor() {
@@ -20,16 +35,10 @@ export default class App {
 
   render() {
     const { phase } = this.dataBus;
-    const component =
-      {
-        MENU: new Menu(),
-        INTRO: new Intro(),
-        RANK: new Rank(),
-        PLAY: new Play(),
-      }[phase];
-    if (component.render) {
+    const route = getRoute(phase);
+    if (route.render) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      component.render();
+      route.render();
     } else {
       throw new Error(`组件${phase}没有定义render方法`);
     }
