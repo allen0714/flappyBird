@@ -8,31 +8,11 @@ const BIRD_IMG = new Image();
 BIRD_IMG.src = 'images/birds.png';
 const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
 const [READY_WIDTH, READY_HEIGHT, TUTORIAL_WIDTH, TUTORIAL_HEIGHT, INIT_SCORE_WIDTH, INIT_SCORE_HEIGHT] = [196, 62, 114, 98, 16, 20];
-const a = 9.8;
-export default class Intro {
-  constructor(ctx) {
 
-    this.index = 0; // 用于绘制小鸟扇动翅膀
-    this.speed = 10;
-    this.y = 220;
-    this.dy = 0.2;
-  }
-  update(frame) {
-    this.dy += 0.088;
-    this.y += this.dy;
-    this
-    if (frame % 8 === 0) {
-      this.index++;
-    }
-    if (this.index > 2) {
-      this.index = 0;
-    }
-    if (this.y > 247) {
-      this.dy = -2;
-    }
-  }
+const ctx = canvas.getContext('2d');
 
-  render(ctx) {
+export default class Introduction {
+  render() {
     // 绘制getready
     ctx.drawImage(
       INTRO_READY_IMG,
@@ -56,16 +36,6 @@ export default class Intro {
       screenHeight / 8 - TUTORIAL_HEIGHT / 2,
       INIT_SCORE_WIDTH,
       INIT_SCORE_HEIGHT,
-    );
-
-    ctx.drawImage(
-      BIRD_IMG,
-      52.5 * this.index, 0,
-      50, 35,
-      screenWidth / 6,
-      this.y,
-      50,
-      35,
     );
   }
 } 

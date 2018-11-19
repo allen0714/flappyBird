@@ -19,10 +19,10 @@ const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
 const [BIRD_X, BIRD_Y, speed, a] = [screenWidth / 2, screenHeight / 2, 0.0003, 0.0006];
 export default class Bird extends Sprite{
   constructor() {
+    super(BIRD_IMG_SRC, BIRD_WIDTH, BIRD_HEIGHT);    
     if (instance) {
       return instance;
     }
-    super(BIRD_IMG_SRC, BIRD_WIDTH, BIRD_HEIGHT);
     instance = this;
     this.speed = speed; //初始速度
     this.x = BIRD_X;

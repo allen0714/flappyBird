@@ -1,6 +1,6 @@
 import Bird from '../runtime/Bird';
 import DataBus from '../DataBus';
-import MenuButton from '../runtime/Menu.js';
+import MenuButton from '../runtime/Menu';
 import BackGround from '../runtime/Background';
 import Route from '../base/Route';
 const backGround = new BackGround();
