@@ -1,10 +1,12 @@
 import Bird from '../runtime/Bird';
 import DataBus from '../DataBus';
-import MenuButton from '../runtime/Menu.js';
+import MenuButton from '../runtime/MenuButton.js';
 import BackGround from '../runtime/Background';
 
 let instance = null;
 const dataBus = new DataBus();
+const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
+const [BIRD_X, BIRD_Y] = [screenWidth / 2, screenHeight / 2 - 100];
 
 export default class Menu {
 
@@ -30,7 +32,7 @@ export default class Menu {
   render() {
     this.backGround.render();
     this.menuButton.renderGameMenu();
-    this.bird.wave(8);
+    this.bird.wave(8, BIRD_X, BIRD_Y);
   }
 }
 
