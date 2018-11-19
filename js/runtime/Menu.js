@@ -2,8 +2,6 @@ import EventUtil from '../base/EventUtil.js';
 const screenWidth = window.innerWidth;
 const screenHeight = window.innerHeight;
 const ctx = canvas.getContext('2d');
-const ctx2 = canvas.getContext('2d');
-console.log('is it equal?:  ', ctx ===ctx2);
 
 let atlas = new Image();
 atlas.src = 'images/title.png';
