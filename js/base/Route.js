@@ -1,3 +1,4 @@
+import EventUtil from './EventUtil';
 const getEventListener = (prototype) => {
   const attrs = Object.getOwnPropertyNames(prototype);
   const eventListeners = [];
@@ -17,6 +18,7 @@ export default class Route {
       return this;
     }
     else {
+      EventUtil.removeAllHandlers();
       hasBeenInitializedMap[name] = name;
       const listeners = getEventListener(Object.getPrototypeOf(this));
       listeners.forEach((listener) => {
