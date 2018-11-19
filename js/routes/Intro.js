@@ -9,6 +9,8 @@ import EventUtil from '../base/EventUtil';
 let instance;
 const dataBus = new DataBus();
 const bird = new Bird();
+const backGround = new BackGround();
+const tutorial = new Tutorial();
 export default class Intro extends Route {
 
   constructor() {
@@ -17,18 +19,15 @@ export default class Intro extends Route {
       return instance;
     }
     instance = this;
-    this.bird = new Bird();
-    this.backGround = new BackGround();
-    this.tutorial = new Tutorial();
   }
-  // onTouchScreen
+
   render() {
-    this.backGround.render();
-    this.tutorial.render();
-    this.bird.wave(8);
+    backGround.render();
+    tutorial.render();
+    bird.wave(8);
   }
-  onTouchinitEvent() {
-    EventUtil.addTouchHandler(()=> true)(() => {
+  onTouchScreen() {
+    EventUtil.addTouchHandler(() => true)(() => {
       dataBus.goToPlay();
     });
   }
