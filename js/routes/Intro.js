@@ -21,6 +21,7 @@ export default class Intro extends Route {
     this.backGround = new BackGround();
     this.tutorial = new Tutorial();
   }
+  // onTouchScreen
   render() {
     this.backGround.render();
     this.tutorial.render();
