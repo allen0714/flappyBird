@@ -2,34 +2,36 @@ import Bird from '../runtime/Bird';
 import DataBus from '../DataBus';
 import MenuButton from '../runtime/Menu.js';
 import BackGround from '../runtime/Background';
+import Route from '../base/Route';
+const backGround = new BackGround();
+const menuButton = new MenuButton();
 
 let instance = null;
 const dataBus = new DataBus();
 
-export default class Menu {
-
+export default class Menu extends Route {
   constructor() {
+    super(); // 坑，小程序继承必须调用super
     if (instance) {
       return instance;
     }
     instance = this;
     this.bird = new Bird();
-    this.backGround = new BackGround();
-    this.menuButton = new MenuButton();
-    this.onClickRank = this.menuButton.getTouchRankFunc(() => {
-      dataBus.goToRank();
-    });
-    this.onClickStart = this.menuButton.getTouchStartFunc(()=> {
+  }
+  onTouchStart() {
+    menuButton.getTouchStartFunc(() => {
       dataBus.goToIntro();
     });
-    // this.onClickRank = EventUtil.addTouchHandler(this.menuButton.checkIfHitRank)(() => {
-    //   dataBus.goToRank();
-    // });
+  }
+  onTouchRank() {
+    menuButton.getTouchStartFunc(() => {
+      dataBus.goToIntro();
+    });
   }
 
   render() {
-    this.backGround.render();
-    this.menuButton.renderGameMenu();
+    backGround.render();
+    menuButton.renderGameMenu();
     this.bird.wave(8);
   }
 }

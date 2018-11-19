@@ -1,13 +1,15 @@
 const EventUtil =  {
   addTouchHandler : (checkIfHitFunc) => {
-    return function (hitCallbck) {
-      canvas.addEventListener('touchstart', (e) => {
+    return function (hitCallback) {
+      const handler = (e) => {
         e.preventDefault();
         if (checkIfHitFunc(e)) {
-          hitCallbck(e);
+          hitCallback(e);
         }
-      });
-    }
+      };
+      canvas.addEventListener('touchstart', handler);
+      return handler;
+    };
   }
 };
 // todo:优化成事件委托？
