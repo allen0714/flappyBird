@@ -38,4 +38,4 @@ export default class Introduction {
       INIT_SCORE_HEIGHT,
     );
   }
-} 
+}
