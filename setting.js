@@ -1,3 +1,4 @@
+export default
 {
   "pipe": {
     "margin": 200,
