@@ -2,13 +2,11 @@ import EventUtil from '../base/EventUtil.js';
 const screenWidth = window.innerWidth;
 const screenHeight = window.innerHeight;
 const ctx = canvas.getContext('2d');
-const ctx2 = canvas.getContext('2d');
-console.log('is it equal?:  ', ctx ===ctx2);
 
 let atlas = new Image();
 atlas.src = 'images/title.png';
 // 绘制圆角矩形
-const roundRect = (ctx,x, y, w, h, r) => {
+const drawRoundRect = (ctx,x, y, w, h, r, color, type) => {
   if (w < 2 * r) r = w / 2;
   if (h < 2 * r) r = h / 2;
   ctx.beginPath();
@@ -17,8 +15,18 @@ const roundRect = (ctx,x, y, w, h, r) => {
   ctx.arcTo(x + w, y + h, x, y + h, r);
   ctx.arcTo(x, y + h, x, y, r);
   ctx.arcTo(x, y, x + w, y, r);
+  ctx[type + 'Style'] = color;
   ctx.closePath();
-  return ctx;
+  ctx[type]();
+}
+const drawTriangle = (ctx, x1, y1, x2, y2, x3, y3, color, type) => {
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);  //绘制起始点
+  ctx.lineTo(x2, y2);
+  ctx.lineTo(x3, y3);
+  ctx[type + 'Style'] = color;
+  ctx.closePath();
+  ctx[type]();
 }
 export default class Menu {
   renderGameMenu() {
@@ -28,10 +36,9 @@ export default class Menu {
       screenWidth / 2 - 100,
       screenHeight / 2 - screenHeight / 3,
       200, 50
-    )
+    );
     // 绘制圆角矩形
-    ctx.fillStyle = "#ffffff"
-    roundRect(ctx, screenWidth / 2 - 87, screenHeight / 2 - 35, 175, 70, 30).fill();
+    drawRoundRect(ctx, screenWidth / 2 - 87, screenHeight / 2 - 35, 175, 70, 30, "#ffffff", "fill");
 
     // 开始游戏文字
     ctx.fillStyle = "#000000"
@@ -41,14 +48,8 @@ export default class Menu {
       screenWidth / 2 - 37,
       screenHeight / 2 + 10,
     )
-    // 绘制开始游戏的三角图标
-    ctx.beginPath();
-    ctx.moveTo(screenWidth / 2 - 42, screenHeight / 2);  //绘制起始点
-    ctx.lineTo(screenWidth / 2 - 57, screenHeight / 2-15);
-    ctx.lineTo(screenWidth / 2 - 57, screenHeight / 2 + 15);
-    ctx.fillStyle = "#00EE76";
-    ctx.closePath();
-    ctx.fill();
+    drawTriangle(ctx, screenWidth / 2 - 42, screenHeight / 2, screenWidth / 2 - 57,
+    screenHeight / 2 - 15, screenWidth / 2 - 57, screenHeight / 2 + 15, "#00EE76", "fill");
     // 排行榜
     ctx.beginPath();
     ctx.fillStyle = "#ffffff";
@@ -59,7 +60,6 @@ export default class Menu {
     ctx.rect(screenWidth / 2 - 38,
       screenHeight / 2 - 110 + 260, 10, 30);
       ctx.fill();
-    ctx.fillStyle = "#ffffff"
     ctx.font = "30px Arial"
     ctx.fillText(
       '排行榜',

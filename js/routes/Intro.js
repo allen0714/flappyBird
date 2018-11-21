@@ -9,6 +9,8 @@ import EventUtil from '../base/EventUtil';
 let instance;
 const dataBus = new DataBus();
 const bird = new Bird();
+const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
+const [BIRD_X, BIRD_Y] = [screenWidth / 4, screenHeight / 2];
 export default class Intro extends Route {
 
   constructor() {
@@ -25,7 +27,7 @@ export default class Intro extends Route {
   render() {
     this.backGround.render();
     this.tutorial.render();
-    this.bird.wave(8);
+    this.bird.wave(8, BIRD_X, BIRD_Y);
   }
   onTouchinitEvent() {
     EventUtil.addTouchHandler(()=> true)(() => {

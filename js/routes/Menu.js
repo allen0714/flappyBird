@@ -5,6 +5,7 @@ import BackGround from '../runtime/Background';
 import Route from '../base/Route';
 const backGround = new BackGround();
 const menuButton = new MenuButton();
+const bird = new Bird();
 
 let instance = null;
 const dataBus = new DataBus();
@@ -18,7 +19,6 @@ export default class Menu extends Route {
       return instance;
     }
     instance = this;
-    this.bird = new Bird();
   }
   onTouchStart() {
     menuButton.getTouchStartFunc(() => {
@@ -34,7 +34,7 @@ export default class Menu extends Route {
   render() {
     backGround.render();
     menuButton.renderGameMenu();
-    this.bird.wave(8, BIRD_X, BIRD_Y);
+    bird.wave(8, BIRD_X, BIRD_Y);
   }
 }
 
