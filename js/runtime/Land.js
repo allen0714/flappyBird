@@ -1,8 +1,8 @@
 import Sprite from '../base/Sprite';
 
 const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
-const BG_IMG_SRC = 'images/land.png';//绝对路径
-const [BG_WIDTH, BG_HEIGHT, BG_PIC_HEIGHT, BG_MOVE_STEP] = [336, 112, screenHeight-112, 50];
+const BG_IMG_SRC = 'images/land_high.png';//绝对路径
+const [BG_WIDTH, BG_HEIGHT, BG_PIC_HEIGHT, BG_MOVE_STEP] = [336, screenHeight * 0.2, screenHeight * 0.8, 2];
 const ctx = canvas.getContext('2d');
 
 let instance = null;
