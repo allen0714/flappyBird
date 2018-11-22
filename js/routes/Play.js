@@ -1,24 +1,35 @@
-//import Bird from '../runtime/Bird.js';
-import BackGround from '../runtime/Background.js';
-import Pipe from '../runtime/Pipe.js';
-import DataBus from '../DataBus.js';
+import Bird from '../runtime/Bird';
+import DataBus from '../DataBus';
+import BackGround from '../runtime/Background';
+import Route from '../base/Route';
+import EventUtil from '../base/EventUtil';
 
 let instance = null;
-const pipe = new Pipe();
+const backGround = new BackGround();
+const bird = new Bird();
 const dataBus = new DataBus();
-const backGround = new BackGround();    
+const instanceSpeed = -0.3;
 
-export default class Play {
+export default class Play extends Route{
   constructor() {
+    super();
     if (instance) {
       return instance;
     }
     instance = this;
-
+    this.lastFrameTime = Date.now();
   }
   render() {
-    backGround.render(); 
-    pipe.update(); 
-    pipe.render();  
+    const now =Date.now();
+    const interval = now - this.lastFrameTime;//两帧之间的时间
+    this.lastFrameTime = now;
+    backGround.render();
+    bird.wave(8, true);
+    bird.down(interval);
+  }
+  onTouchBirdUp() {
+    EventUtil.addTouchHandler(() => true)(() => {
+      bird.speed = instanceSpeed;
+    });
   }
 }

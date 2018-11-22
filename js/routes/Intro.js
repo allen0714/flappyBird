@@ -9,6 +9,8 @@ import EventUtil from '../base/EventUtil';
 let instance;
 const dataBus = new DataBus();
 const bird = new Bird();
+const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
+const [BIRD_X, BIRD_Y] = [screenWidth / 4, screenHeight / 2];
 const backGround = new BackGround();
 const tutorial = new Tutorial();
 export default class Intro extends Route {
@@ -24,6 +26,7 @@ export default class Intro extends Route {
   render() {
     backGround.render();
     tutorial.render();
+    bird.setPosition(screenWidth / 4, screenHeight / 2);
     bird.wave(8);
   }
   onTouchScreen() {

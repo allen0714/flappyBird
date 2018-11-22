@@ -1,13 +1,16 @@
 import Bird from '../runtime/Bird';
 import DataBus from '../DataBus';
-import MenuButton from '../runtime/Menu';
+import MenuButton from '../runtime/MenuButton.js';
 import BackGround from '../runtime/Background';
 import Route from '../base/Route';
 const backGround = new BackGround();
 const menuButton = new MenuButton();
+const bird = new Bird();
 
 let instance = null;
 const dataBus = new DataBus();
+const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
+const [BIRD_X, BIRD_Y] = [screenWidth / 2, screenHeight / 2 - 100];
 
 export default class Menu extends Route {
   constructor() {
@@ -16,7 +19,6 @@ export default class Menu extends Route {
       return instance;
     }
     instance = this;
-    this.bird = new Bird();
   }
   onTouchStart() {
     menuButton.getTouchStartFunc(() => {
@@ -24,15 +26,15 @@ export default class Menu extends Route {
     });
   }
   onTouchRank() {
-    menuButton.getTouchStartFunc(() => {
-      dataBus.goToIntro();
+    menuButton.getTouchRankFunc(() => {
+      dataBus.goToRank();
     });
   }
 
   render() {
     backGround.render();
     menuButton.renderGameMenu();
-    this.bird.wave(8);
+    bird.wave(8);
   }
 }
 
