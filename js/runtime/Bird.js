@@ -13,7 +13,7 @@ const [
   BIRD_HEIGHT//小鸟图片中，小鸟的高度
 ] = [11,34,24];
 const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
-const [X, Y, G, speed] = [screenWidth / 4, screenHeight / 2, 0.0006, 0.0003];
+const [BIRD_POSITION_X, BIRD_POSITION_Y, G, speed] = [screenWidth / 4, screenHeight / 2, 0.0006, 0.0003];
 export default class Bird extends Sprite{
   constructor() {
     super(BIRD_IMG_SRC, BIRD_WIDTH, BIRD_HEIGHT);
@@ -21,8 +21,8 @@ export default class Bird extends Sprite{
       return instance;
     }
     instance = this;
-    this.x = X;
-    this.y = Y;
+    this.x = BIRD_POSITION_X;
+    this.y = BIRD_POSITION_Y;
     this.speed = speed;
     this.G = G;
     this.birdXPistions = new LoopArray(8, 60, 113);//小鸟图片中，小鸟左边身体的x位置
@@ -60,10 +60,9 @@ export default class Bird extends Sprite{
       BIRD_HEIGHT
     );
     ctx.restore();
-  }
-
+  };
   down = (interval) => {
     this.speed = this.speed + this.G * interval;
     this.y = this.y + this.speed * interval + 0.5 * this.G * interval * interval;
-  }
+  };
 };

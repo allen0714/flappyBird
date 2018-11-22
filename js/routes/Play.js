@@ -3,10 +3,10 @@ import DataBus from '../DataBus';
 import BackGround from '../runtime/Background';
 import Route from '../base/Route';
 import EventUtil from '../base/EventUtil';
-const backGround = new BackGround();
-const bird = new Bird();
 
 let instance = null;
+const backGround = new BackGround();
+const bird = new Bird();
 const dataBus = new DataBus();
 const instanceSpeed = -0.3;
 

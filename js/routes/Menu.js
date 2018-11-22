@@ -26,8 +26,8 @@ export default class Menu extends Route {
     });
   }
   onTouchRank() {
-    menuButton.getTouchStartFunc(() => {
-      dataBus.goToIntro();
+    menuButton.getTouchRankFunc(() => {
+      dataBus.goToRank();
     });
   }
 

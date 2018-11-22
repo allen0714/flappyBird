@@ -6,7 +6,7 @@ const ctx = canvas.getContext('2d');
 let atlas = new Image();
 atlas.src = 'images/title.png';
 // 绘制圆角矩形
-const drawRoundRect = (ctx,x, y, w, h, r, color, type) => {
+const drawRoundRect = (x, y, w, h, r, color, type) => {
   if (w < 2 * r) r = w / 2;
   if (h < 2 * r) r = h / 2;
   ctx.beginPath();
@@ -18,8 +18,9 @@ const drawRoundRect = (ctx,x, y, w, h, r, color, type) => {
   ctx[type + 'Style'] = color;
   ctx.closePath();
   ctx[type]();
-}
-const drawTriangle = (ctx, x1, y1, x2, y2, x3, y3, color, type) => {
+};
+//画三角形
+const drawTriangle = (x1, y1, x2, y2, x3, y3, color, type) => {
   ctx.beginPath();
   ctx.moveTo(x1, y1);  //绘制起始点
   ctx.lineTo(x2, y2);
@@ -27,7 +28,26 @@ const drawTriangle = (ctx, x1, y1, x2, y2, x3, y3, color, type) => {
   ctx[type + 'Style'] = color;
   ctx.closePath();
   ctx[type]();
-}
+};
+//画文字
+const drawText = (x, y, color, fontSize, text) => {
+  ctx.fillStyle = color;
+  ctx.font = fontSize;
+  ctx.fillText(
+    text,
+    x,
+    y,
+  );
+};
+//画排行榜
+const drawRank = (x, y, w, h, color, type) => {
+  ctx.beginPath();
+  ctx.fillStyle = color;
+  ctx.rect(x - w - 1, y + 10, w, h - 10);
+  ctx.rect(x, y, w, h);
+  ctx.rect(x + w + 1, y + 5, w, h - 5);
+  ctx[type]();
+};
 export default class Menu {
   renderGameMenu() {
     // 绘制title
@@ -37,35 +57,19 @@ export default class Menu {
       screenHeight / 2 - screenHeight / 3,
       200, 50
     );
-    // 绘制圆角矩形
-    drawRoundRect(ctx, screenWidth / 2 - 87, screenHeight / 2 - 35, 175, 70, 30, "#ffffff", "fill");
-
-    // 开始游戏文字
-    ctx.fillStyle = "#000000"
-    ctx.font = "25px STXihei"
-    ctx.fillText(
-      '开始游戏',
-      screenWidth / 2 - 37,
-      screenHeight / 2 + 10,
-    )
-    drawTriangle(ctx, screenWidth / 2 - 42, screenHeight / 2, screenWidth / 2 - 57,
-    screenHeight / 2 - 15, screenWidth / 2 - 57, screenHeight / 2 + 15, "#00EE76", "fill");
+    drawRoundRect(screenWidth / 2 - 87, screenHeight / 2 - 35, 175, 70, 30, "#ffffff", "fill");
+    drawText(screenWidth / 2 - 37, screenHeight / 2 + 10, "#000000", "25px STXihei", "开始游戏");
+    drawTriangle(screenWidth / 2 - 42, screenHeight / 2, screenWidth / 2 - 57,
+      screenHeight / 2 - 15, screenWidth / 2 - 57, screenHeight / 2 + 15, "#00EE76", "fill");
+    drawRank(screenWidth / 2 - 59, screenHeight * 0.7, 10, 35, "#ffffff", "fill");
     // 排行榜
-    ctx.beginPath();
-    ctx.fillStyle = "#ffffff";
-    ctx.rect(screenWidth / 2 - 60,
-      screenHeight / 2 - 110 + 265, 10, 25);
-    ctx.rect(screenWidth / 2 - 49,
-      screenHeight / 2 - 110 + 255, 10, 35);
-    ctx.rect(screenWidth / 2 - 38,
-      screenHeight / 2 - 110 + 260, 10, 30);
-      ctx.fill();
-    ctx.font = "30px Arial"
-    ctx.fillText(
-      '排行榜',
-      screenWidth / 2 - 10,
-      screenHeight / 2 - 120 + 300
-    )
+    // ctx.beginPath();
+    // ctx.fillStyle = "#ffffff";
+    // ctx.rect(screenWidth / 2 - 70, screenHeight * 0.7 + 10, 10, 25);
+    // ctx.rect(screenWidth / 2 - 59, screenHeight * 0.7, 10, 35);
+    // ctx.rect(screenWidth / 2 - 48, screenHeight * 0.7 + 5, 10, 30);
+    // ctx.fill();
+    drawText(screenWidth / 2 - 20, screenHeight * 0.7 + 30, "#ffffff", "30px Arial", "排行榜");
   }
   checkIfHit = (e, targetType) => {
     const { clientX, clientY } = e.touches[0];
@@ -74,25 +78,19 @@ export default class Menu {
       && clientX <= endX
       && clientY >= startY
       && clientY <= endY);
-  }
-
-
-  getTouchRankFunc = EventUtil.addTouchHandler(e => this.checkIfHit(e, 'RANK'))
-
-  getTouchStartFunc = EventUtil.addTouchHandler(e => this.checkIfHit(e, 'START'))
-
+  };
+  getTouchRankFunc = EventUtil.addTouchHandler(e => this.checkIfHit(e, 'RANK'));
+  getTouchStartFunc = EventUtil.addTouchHandler(e => this.checkIfHit(e, 'START'));
   btnBeginArea = {
     startX: screenWidth / 2 - 87,
     startY: screenHeight / 2 - 35,
     endX: screenWidth / 2 + 87,
     endY: screenHeight / 2 + 35, 
-  }
+  };
   btnRankArea = {
-    startX: screenWidth / 2 - 60,
-    startY: screenHeight / 2 + 150,
-    endX: screenWidth / 2 + 80,
-    endY: screenHeight / 2 + 180,
-  }
-
-
+    startX: screenWidth / 2 - 70,
+    startY: screenHeight * 0.7,
+    endX: screenWidth / 2 + 70,
+    endY: screenHeight * 0.7 + 35,
+  };
 }
