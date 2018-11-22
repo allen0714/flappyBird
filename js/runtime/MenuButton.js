@@ -62,13 +62,6 @@ export default class Menu {
     drawTriangle(screenWidth / 2 - 42, screenHeight / 2, screenWidth / 2 - 57,
       screenHeight / 2 - 15, screenWidth / 2 - 57, screenHeight / 2 + 15, "#00EE76", "fill");
     drawRank(screenWidth / 2 - 59, screenHeight * 0.7, 10, 35, "#ffffff", "fill");
-    // 排行榜
-    // ctx.beginPath();
-    // ctx.fillStyle = "#ffffff";
-    // ctx.rect(screenWidth / 2 - 70, screenHeight * 0.7 + 10, 10, 25);
-    // ctx.rect(screenWidth / 2 - 59, screenHeight * 0.7, 10, 35);
-    // ctx.rect(screenWidth / 2 - 48, screenHeight * 0.7 + 5, 10, 30);
-    // ctx.fill();
     drawText(screenWidth / 2 - 20, screenHeight * 0.7 + 30, "#ffffff", "30px Arial", "排行榜");
   }
   checkIfHit = (e, targetType) => {

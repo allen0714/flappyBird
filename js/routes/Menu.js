@@ -34,7 +34,7 @@ export default class Menu extends Route {
   render() {
     backGround.render();
     menuButton.renderGameMenu();
-    bird.wave(8, BIRD_X, BIRD_Y);
+    bird.wave(8);
   }
 }
 

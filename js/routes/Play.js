@@ -24,7 +24,7 @@ export default class Play extends Route{
     const interval = now - this.lastFrameTime;//两帧之间的时间
     this.lastFrameTime = now;
     backGround.render();
-    bird.fly(8);
+    bird.wave(8, true);
     bird.down(interval);
   }
   onTouchBirdUp() {

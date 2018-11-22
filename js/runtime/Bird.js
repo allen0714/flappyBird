@@ -13,7 +13,7 @@ const [
   BIRD_HEIGHT//小鸟图片中，小鸟的高度
 ] = [11,34,24];
 const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
-const [BIRD_POSITION_X, BIRD_POSITION_Y, G, speed] = [screenWidth / 4, screenHeight / 2, 0.0006, 0.0003];
+const [BIRD_X, BIRD_Y, G, speed] = [screenWidth / 2, screenHeight / 2 -100, 0.0006, 0.0003];
 export default class Bird extends Sprite{
   constructor() {
     super(BIRD_IMG_SRC, BIRD_WIDTH, BIRD_HEIGHT);
@@ -21,16 +21,19 @@ export default class Bird extends Sprite{
       return instance;
     }
     instance = this;
-    this.x = BIRD_POSITION_X;
-    this.y = BIRD_POSITION_Y;
+    this.x = BIRD_X;
+    this.y = BIRD_Y;
     this.speed = speed;
     this.G = G;
     this.birdXPistions = new LoopArray(8, 60, 113);//小鸟图片中，小鸟左边身体的x位置
   }
 
-  wave = (frameCount, BIRD_X, BIRD_Y) => { //todo: fps ??
+  wave = (frameCount, play = false) => { //todo: fps ??
     ctx.save();
-    ctx.translate(BIRD_X, BIRD_Y);
+    ctx.translate(this.x, this.y);
+    if (play) {
+      ctx.rotate((Math.PI / 6) * this.speed / 0.3);
+    };
     ctx.drawImage(
       this.img,
       this.birdXPistions.nextBy(frameCount),
@@ -44,25 +47,12 @@ export default class Bird extends Sprite{
     );
     ctx.restore();
   }
-  fly = (frameCount) => {
-    ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate((Math.PI / 6) * this.speed / 0.3);
-    ctx.drawImage(
-      this.img,
-      this.birdXPistions.nextBy(frameCount),
-      BIRD_PIC_Y_START,
-      BIRD_WIDTH,
-      BIRD_HEIGHT,
-      -BIRD_WIDTH / 2,
-      -BIRD_HEIGHT / 2,
-      BIRD_WIDTH,
-      BIRD_HEIGHT
-    );
-    ctx.restore();
-  };
   down = (interval) => {
     this.speed = this.speed + this.G * interval;
     this.y = this.y + this.speed * interval + 0.5 * this.G * interval * interval;
   };
+  setPosition = (X, Y) => {
+    this.x = X,
+    this.y = Y
+  }
 };

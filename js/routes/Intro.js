@@ -26,7 +26,8 @@ export default class Intro extends Route {
   render() {
     backGround.render();
     tutorial.render();
-    bird.wave(8, BIRD_X, BIRD_Y);
+    bird.setPosition(screenWidth / 4, screenHeight / 2);
+    bird.wave(8);
   }
   onTouchScreen() {
     EventUtil.addTouchHandler(() => true)(() => {
