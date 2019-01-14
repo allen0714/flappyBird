@@ -3,17 +3,15 @@ import setting from '../../setting.js';
 
 const pipeInfo = setting["pipe"];
 console.info(pipeInfo)
-// const {margin} = pipeInfo;
-
-const info = wx.getSystemInfoSync();
-const { screenWidth, screenHeight } = info;
-console.info('宽：',screenWidth, '高:', screenHeight);
+const [height_low,height_high] = pipeInfo["randomHeightRange"];
+const [center_low,center_high] = pipeInfo["centerRange"];
+const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
 
 const PIPE_DOWN = new Image();
-PIPE_DOWN.src = 'images/pipe_down.png';
+PIPE_DOWN.src = 'images/pipe_down_long.png';
 const PIPE_UP = new Image();
-PIPE_UP.src = 'images/pipe_up.png';
-const [PIPE_WIDTH, PIPE_HEIGHT, PIPE_MOVE_STEP, PIPE_LENGTH] = [52, screenHeight-112, 2, 320];
+PIPE_UP.src = 'images/pipe_up_long.png';
+const [PIPE_WIDTH, PIPE_HEIGHT, PIPE_MOVE_STEP, PIPE_LENGTH] = [52, screenHeight*0.8, 2, 460];
 
 const ctx = canvas.getContext('2d');
 
