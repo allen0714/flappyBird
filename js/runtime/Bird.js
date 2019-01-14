@@ -50,9 +50,12 @@ export default class Bird extends Sprite{
   down = (interval) => {
     this.speed = this.speed + this.G * interval;
     this.y = this.y + this.speed * interval + 0.5 * this.G * interval * interval;
-  };
+  }
   setPosition = (X, Y) => {
     this.x = X,
     this.y = Y
+  }
+  isCollision = () => {
+    return (this.y < 100 || this.y > window.innerHeight - this.height);
   }
 };

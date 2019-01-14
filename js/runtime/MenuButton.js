@@ -18,7 +18,7 @@ const drawRoundRect = (x, y, w, h, r, color, type) => {
   ctx[type + 'Style'] = color;
   ctx.closePath();
   ctx[type]();
-};
+}
 //画三角形
 const drawTriangle = (x1, y1, x2, y2, x3, y3, color, type) => {
   ctx.beginPath();
@@ -28,7 +28,7 @@ const drawTriangle = (x1, y1, x2, y2, x3, y3, color, type) => {
   ctx[type + 'Style'] = color;
   ctx.closePath();
   ctx[type]();
-};
+}
 //画文字
 const drawText = (x, y, color, fontSize, text) => {
   ctx.fillStyle = color;
@@ -38,7 +38,7 @@ const drawText = (x, y, color, fontSize, text) => {
     x,
     y,
   );
-};
+}
 //画排行榜
 const drawRank = (x, y, w, h, color, type) => {
   ctx.beginPath();
@@ -47,7 +47,7 @@ const drawRank = (x, y, w, h, color, type) => {
   ctx.rect(x, y, w, h);
   ctx.rect(x + w + 1, y + 5, w, h - 5);
   ctx[type]();
-};
+}
 export default class Menu {
   renderGameMenu() {
     // 绘制title
@@ -71,7 +71,7 @@ export default class Menu {
       && clientX <= endX
       && clientY >= startY
       && clientY <= endY);
-  };
+  }
   getTouchRankFunc = EventUtil.addTouchHandler(e => this.checkIfHit(e, 'RANK'));
   getTouchStartFunc = EventUtil.addTouchHandler(e => this.checkIfHit(e, 'START'));
   btnBeginArea = {

@@ -11,7 +11,7 @@ const dataBus = new DataBus();
 const instanceSpeed = -0.3;
 const isPlay = true;
 
-export default class Play extends Route{
+export default class Dead extends Route {
   constructor() {
     super();
     if (instance) {
@@ -21,19 +21,15 @@ export default class Play extends Route{
     this.lastFrameTime = Date.now();
   }
   render() {
-    const now =Date.now();
+    const now = Date.now();
     const interval = now - this.lastFrameTime;//两帧之间的时间
     this.lastFrameTime = now;
     backGround.render();
-    bird.wave(8, isPlay);
+    // bird.wave(8, isPlay);
+    bird.speed = 0;
     bird.down(interval);
-    if (bird.isCollision()) {
-      dataBus.goToDead();
-    }
-  }
-  onTouchBirdUp() {
-    EventUtil.addTouchHandler(() => true)(() => {
-      bird.speed = instanceSpeed;
-    });
+    // if (bird.isCollision()) {
+    //   dataBus.goToDead();
+    // }
   }
 }
