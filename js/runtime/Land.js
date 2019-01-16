@@ -15,11 +15,12 @@ export default class Land extends Sprite {
     super(BG_IMG_SRC, BG_WIDTH, BG_HEIGHT);
     instance = this;
     this.left = screenWidth;
+    this.BG_MOVE_STEP = BG_MOVE_STEP;
     this.render();
   }
 
   render() {
-    this.left -= BG_MOVE_STEP;
+    this.left -= this.BG_MOVE_STEP;
     if (this.left < 0) {
       this.left = screenWidth;
     }

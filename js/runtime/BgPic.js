@@ -21,13 +21,14 @@ export default class BgPic extends Sprite {
     }
     super(BG_DAY_SRC, BG_WIDTH, BG_HEIGHT);
     instance = this;
+    this.BG_MOVE_STEP = BG_MOVE_STEP;
     this.left = screenWidth;
     this.dayNightPicCount = 0;//白天（黑夜）出现的图片数计数器
     this.isDay = true; //当前是白天
   }
 
   render() {
-    this.left -= BG_MOVE_STEP;
+    this.left -= this.BG_MOVE_STEP;
     if (this.left < 0) {
       this.left = screenWidth;
       this.dayNightPicCount ++;

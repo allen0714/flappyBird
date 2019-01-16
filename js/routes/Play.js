@@ -11,6 +11,7 @@ const bird = new Bird();
 const pipe = new Pipe();
 const dataBus = new DataBus();
 const instanceSpeed = -0.3;
+const isPlay = true;
 
 export default class Play extends Route{
   constructor() {
@@ -28,17 +29,22 @@ export default class Play extends Route{
     this.lastFrameTime = now;
 
     backGround.render(dataBus);
-
+    
+    // if (bird.isCollisionWith(pipe)) {
+    //   dataBus.goToDead();
+    // }
     dataBus.pipes.forEach((item) => {
       item.update();
     });
     this.pipeGenerate();
+    this.collisionDetection();
     dataBus.pipes.forEach((item) => {
       item.render();
     });
     
-    // bird.wave(8, true);
-    // bird.down(interval);
+    bird.wave(8, isPlay);
+    bird.down(interval);
+    
   }
   onTouchBirdUp() {
     EventUtil.addTouchHandler(() => true)(() => {
@@ -54,6 +60,14 @@ export default class Play extends Route{
       let pipe = dataBus.pool.getItemByClass('pipe', Pipe);
       pipe.init();
       dataBus.pipes.push(pipe);
+    }
+  }
+  collisionDetection() {
+    for (let i = 0, il = dataBus.pipes.length; i < il; i++) {
+      const pipe = dataBus.pipes[i];
+      if (bird.isCollisionWith(pipe)) {
+        dataBus.goToDead();
+      }
     }
   }
 }

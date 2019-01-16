@@ -30,8 +30,7 @@ export default class Pipe {
     
   }
   init() {
-    this.x = screenWidth;
-    this.y = 0;
+    this.width = PIPE_WIDTH;
     this.left = screenWidth;
     this.gap = screenHeight * gapFactor;
     this.pipeDownHeight = getRandomIntInclusive(50, 250); //上管的随机高度

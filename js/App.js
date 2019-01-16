@@ -5,6 +5,7 @@ import Intro from './routes/Intro';
 import Menu from './routes/Menu';
 import Rank from './routes/Rank';
 import Play from './routes/Play';
+import Dead from './routes/Dead';
 
 const ctx = canvas.getContext('2d');
 
@@ -18,6 +19,8 @@ const getRoute = (phase) => {
       return new Rank();
     case 'PLAY':
       return new Play();
+    case 'DEAD':
+      return new Dead();
     default:
       throw new Error('unknown router of phase:' + phase);
   }
