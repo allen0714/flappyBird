@@ -25,6 +25,7 @@ export default class Pipe {
     this.pipeDownHeight = getRandomIntInclusive(50,250); //上管的随机高度
     this.gap = 130;
     this.left = screenWidth; // 管子最开始在屏幕右侧
+    this.width = PIPE_WIDTH;
   }
   update() {
     this.left -= PIPE_MOVE_STEP;

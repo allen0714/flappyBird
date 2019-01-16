@@ -26,13 +26,12 @@ export default class Play extends Route{
     const now =Date.now();
     const interval = now - this.lastFrameTime;//两帧之间的时间
     this.lastFrameTime = now;
-
     backGround.render();
     pipe.update();
     pipe.render();
-    bird.wave(8, true);
+    bird.wave(8, isPlay);
     bird.down(interval);
-    if (bird.isCollision()) {
+    if (bird.isCollisionWith(pipe)) {
       dataBus.goToDead();
     }
   }

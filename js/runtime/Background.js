@@ -16,7 +16,10 @@ export default class Background {
     this.bgPic = new BgPic();
     this.land = new Land();
   }
-
+  setMoveStep = () => {
+    this.bgPic.BG_MOVE_STEP = 0;
+    this.land.BG_MOVE_STEP = 0;
+  }
   render = () => {
     this.bgPic.render();
     this.land.render();

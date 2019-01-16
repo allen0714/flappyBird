@@ -25,14 +25,16 @@ export default class Bird extends Sprite{
     this.y = BIRD_Y;
     this.speed = speed;
     this.G = G;
+    this.width = BIRD_WIDTH;
     this.birdXPistions = new LoopArray(8, 60, 113);//小鸟图片中，小鸟左边身体的x位置
   }
-
-  wave = (frameCount, play = false) => { //todo: fps ??
+  wave = (frameCount, play = false, isDead = false) => { //todo: fps ??
     ctx.save();
     ctx.translate(this.x, this.y);
     if (play) {
       ctx.rotate((Math.PI / 6) * this.speed / 0.3);
+    } else if (isDead) {//碰撞后小鸟头部垂直地面落下
+      ctx.rotate(Math.PI / 2);
     };
     ctx.drawImage(
       this.img,
@@ -52,10 +54,17 @@ export default class Bird extends Sprite{
     this.y = this.y + this.speed * interval + 0.5 * this.G * interval * interval;
   }
   setPosition = (X, Y) => {
-    this.x = X,
-    this.y = Y
+    this.x = X;
+    this.y = Y;
   }
-  isCollision = () => {
-    return (this.y < 100 || this.y > window.innerHeight - this.height);
+  isCollisionWith = (sp) => {//碰撞检测
+    return (this.y < BIRD_HEIGHT / 2 ||
+      this.y > window.innerHeight * 0.8 - this.height / 2 ||
+      (this.x > sp.left - this.width / 2 && this.x < sp.left + sp.width + this.width / 2) &&
+      (this.y < sp.pipeDownHeight + this.height / 2 || this.y > sp.pipeDownHeight + sp.gap - this.height / 2)
+    );
+  }
+  isCollisionWithGround = () => {//是否落到地面
+    return this.y > screenHeight * 0.8 - BIRD_WIDTH/2;
   }
 };
