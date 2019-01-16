@@ -21,20 +21,39 @@ export default class Play extends Route{
     instance = this;
     this.lastFrameTime = Date.now();
   }
+
   render() {
     const now =Date.now();
     const interval = now - this.lastFrameTime;//两帧之间的时间
     this.lastFrameTime = now;
 
-    backGround.render();
-    pipe.update();
-    pipe.render();
-    bird.wave(8, true);
-    bird.down(interval);
+    backGround.render(dataBus);
+
+    dataBus.pipes.forEach((item) => {
+      item.update();
+    });
+    this.pipeGenerate();
+    dataBus.pipes.forEach((item) => {
+      item.render();
+    });
+    
+    // bird.wave(8, true);
+    // bird.down(interval);
   }
   onTouchBirdUp() {
     EventUtil.addTouchHandler(() => true)(() => {
       bird.speed = instanceSpeed;
     });
+  }
+  /**
+   * 随着帧数变化的敌机生成逻辑
+   * 帧数取模定义成生成的频率
+   */
+  pipeGenerate() {
+    if (dataBus.frame % 130 === 0) {
+      let pipe = dataBus.pool.getItemByClass('pipe', Pipe);
+      pipe.init();
+      dataBus.pipes.push(pipe);
+    }
   }
 }

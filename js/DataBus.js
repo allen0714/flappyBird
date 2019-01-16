@@ -1,3 +1,5 @@
+import Pool from './base/Pool.js';
+
 let instance = null;
 const [
   MENU,
@@ -20,10 +22,9 @@ export default class DataBus {
     this.score = 0; //分数
     this.aniId = 0; // 动画句柄
     this.phase = MENU; //游戏状态， 当前所处阶段
-
-    // setInterval(() => {
-    //   this.frame = 0;
-    // },10*60*1000);
+    // 缓存对象池
+    this.pool = new Pool();
+    this.pipes = [];
   }
 
   runFrame () {
@@ -59,4 +60,17 @@ export default class DataBus {
       callback();
     }
   }
+
+  /**
+   * 回收敌人，进入对象池
+   * 此后不进入帧循环
+   */
+  removeEnemey(Pipe) {
+    let temp = this.pipes.shift()
+
+    temp.visible = false
+
+    this.pool.recover('pipe', Pipe)
+  }
+
 }

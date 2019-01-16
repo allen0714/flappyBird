@@ -4,7 +4,8 @@ export default
     "margin": 200,
     "exitHeightRandom": true,
     "exitHeight": 200,
-    "randomHeightRange": [0.2,0.6],
-    "centerRange": [0.15,0.2]
+    "pipeDownHeightRange": [0.15,0.45],
+    "centerRange": [0.15,0.2],
+    "gapFactor": 0.2,
   }
 }

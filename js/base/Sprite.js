@@ -4,11 +4,11 @@ const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
  * 游戏基础的精灵类
  */
 export default class Sprite {
-  constructor(imgSrc = '', width=  0, height = 0, x = 0, y = 0) {
+  constructor(imgSrc = '', width = 0, height = 0, x = 0, y = 0) {
     this.img = new Image();
     this.img.src = imgSrc;
 
-    this.width  = width;
+    this.width = width;
     this.height = height;
 
     this.x = x;
@@ -34,7 +34,7 @@ export default class Sprite {
    * 将精灵图绘制在canvas上
    */
   drawToCanvas(ctx) {
-    if ( !this.visible ){
+    if (!this.visible) {
       return;
     }
 
@@ -57,13 +57,13 @@ export default class Sprite {
     let spX = sp.x + sp.width / 2;
     let spY = sp.y + sp.height / 2;
 
-    if ( !this.visible || !sp.visible ){
+    if (!this.visible || !sp.visible) {
       return false;
     }
 
-    return !!(   spX >= this.x
+    return !!(spX >= this.x
       && spX <= this.x + this.width
       && spY >= this.y
-      && spY <= this.y + this.height  );
+      && spY <= this.y + this.height);
   }
 }
