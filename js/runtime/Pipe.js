@@ -27,7 +27,7 @@ const getRandomIntInclusive = (min, max) => {
 
 export default class Pipe {
   constructor() {
-    
+    this.scored = false
   }
   init() {
     this.width = PIPE_WIDTH;
@@ -35,6 +35,8 @@ export default class Pipe {
     this.gap = screenHeight * gapFactor;
     this.pipeDownHeight = getRandomIntInclusive(50, 250); //上管的随机高度
     this.visible = true;
+    this.isPassed = false;
+    this.isPassedChange = false;
   }
   update() {
     this.left -= PIPE_MOVE_STEP;
@@ -66,5 +68,15 @@ export default class Pipe {
       PIPE_WIDTH,
       PIPE_HEIGHT - this.gap - this.pipeDownHeight,
     );
+  }
+  isPassed(player) {
+    if (this.scored) {
+      return false
+    }
+    let score = (player.x > this.left + this.width)
+    if (score) {
+      this.scored = true
+    }
+    return score
   }
 };
