@@ -18,6 +18,7 @@ const SCORE_IMG = new Image();
 const NUMBER_IMG_PREFIX = 'images/score_';
 const NUMBER_HEIGHT = 20;
 const NUMBER_WIDTH = 16;
+const NUMBER_GAP = 20;
 
 
 export default class Play extends Route{
@@ -46,7 +47,7 @@ export default class Play extends Route{
     dataBus.pipes.forEach((item) => {
       item.render();
     });
-    this.drawScore()
+    this.drawScore();
     bird.wave(8, isPlay);
     bird.down(interval);
 
@@ -85,7 +86,7 @@ export default class Play extends Route{
     this.getImg();
     const bits = this.getBit();    
     bits.forEach((item, idx) => {
-      ctx.drawImage(this.imgs[idx], screenWidth/2 + idx * 20, 20, NUMBER_WIDTH, NUMBER_HEIGHT)
+      ctx.drawImage(this.imgs[idx], screenWidth / 2 + idx * NUMBER_GAP, NUMBER_GAP, NUMBER_WIDTH, NUMBER_HEIGHT)
     });
   }
   getBit() {
