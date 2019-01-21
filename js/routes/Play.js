@@ -6,6 +6,7 @@ import Route from '../base/Route';
 import EventUtil from '../base/EventUtil';
 
 let instance = null;
+const { innerWidth: screenWidth, innerHeight: screenHeight } = window;
 const backGround = new BackGround();
 const bird = new Bird();
 const pipe = new Pipe();
@@ -15,8 +16,9 @@ const isPlay = true;
 const ctx = canvas.getContext('2d');
 const SCORE_IMG = new Image();
 const NUMBER_IMG_PREFIX = 'images/score_';
+const NUMBER_HEIGHT = 20;
+const NUMBER_WIDTH = 16;
 
-const scoreImg = ['images/score_00.png', 'images/score_01.png', 'images/score_02.png', 'images/score_03.png', 'images/score_04.png', 'images/score_05.png', 'images/score_06.png', 'images/score_07.png', 'images/score_08.png', 'images/score_09.png']
 
 export default class Play extends Route{
   constructor() {
@@ -25,7 +27,7 @@ export default class Play extends Route{
       return instance;
     }
     instance = this;
-    this.bits = [];
+    this.imgs = [];
     this.lastFrameTime = Date.now();
   }
 
@@ -62,7 +64,7 @@ export default class Play extends Route{
       dataBus.pipes.push(pipe);
     }
   }
-
+  // 碰撞检测
   collisionDetection() {
     for (let i = 0, il = dataBus.pipes.length; i < il; i++) {
       const pipe = dataBus.pipes[i];
@@ -80,30 +82,21 @@ export default class Play extends Route{
   }
 
   drawScore() {
-    this.splitBit(dataBus.score);
-    this.bits.reverse();
-    for (var i = 0; i < this.bits.length; i++) {
-      SCORE_IMG.src = NUMBER_IMG_PREFIX + this.bits[i] + '.png';
-      ctx.drawImage(SCORE_IMG, 147 + i * 23, 40)
-    }
+    this.getImg();
+    const bits = this.getBit();    
+    bits.forEach((item, idx) => {
+      ctx.drawImage(this.imgs[idx], screenWidth/2 + idx * 20, 20, NUMBER_WIDTH, NUMBER_HEIGHT)
+    });
   }
-
-  splitBit() {
-    if (dataBus.score < 10) {
-      this.bits.push(dataBus.score);
-      return;
-    }
-
-    const bit = Math.floor(dataBus.score / 10);
-    const rest = dataBus.score % 10;
-
-    if (bit >= 10) {
-      this.bits.push(rest)
-      this.splitBit(bit)
-    } else {
-      this.splitBit(rest)
-      this.bits.push(bit)
-    }
+  getBit() {
+    return String(dataBus.score).split('');
   }
-
+  getImg() {
+    const bits = this.getBit();
+    bits.forEach((item,idx) => {
+      const img = new Image();
+      this.imgs.push(img);
+      this.imgs[idx].src = NUMBER_IMG_PREFIX + bits[idx] + '.png';
+    });
+  }
 }
